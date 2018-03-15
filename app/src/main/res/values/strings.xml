@@ -1,0 +1,37 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">BMI</string>
+    <string name="unit">UNIT:</string>
+    <string name="ibs_feet">lbs,inch</string>
+    <string name="kg_m">kg,m</string>
+    <string name="count">COUNT</string>
+    <string name="height">Height</string>
+    <string name="mass">Mass</string>
+    <string name="save">Save</string>
+    <string name="setting">Setting</string>
+    <string name="menu_action_about_us">Menu action about us</string>
+    <string name="about_author">About author</string>
+    <string name="hejka_mam_na_imie_ewa_nie_wiem_co_jeszcze_moge_napisac">AUTOR: EWA ŁYKO </string>
+    <string name="textview">TextView</string>
+    <string name="kilograms">kilograms</string>
+    <string name="meters">meters</string>
+    <string name="pounds">pounds</string>
+    <string name="inches">inches</string>
+    <string name="wrong_height">Wrong height input</string>
+    <string name="wrong_mass">Wrong mass input</string>
+    <string name="wrong_mass_and_height">Wrong mass and height input</string>
+    <string name="saved_data">Data has been saved</string>
+    <string name="wrong_input"> Write height and mass</string>
+    <string name="standards" tools:ignore="TypographyDashes"> below 18.0 – underweight \n18.0 – 25.0 - normal \n25.0 - 30.0 - overweight \nover 30.0 - obese</string>
+    <string name="under_message">You are underweight!</string>
+    <string name="good_message">You have normal BMI</string>
+    <string name="over_message">You are overweight!!!</string>
+    <string name="obese_message">You are obese!!!!!!!</string>
+    <string name="erased_data">Erased data</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="author">What I am doing?</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="reading_about_author">You are reading about author</string>
+    <string name="erase">Erase</string>
+    <string name="back_butt">back butt</string>
+</resources>
