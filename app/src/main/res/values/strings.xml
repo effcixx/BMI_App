@@ -20,8 +20,9 @@
     <string name="wrong_mass">Wrong mass input</string>
     <string name="wrong_mass_and_height">Wrong mass and height input</string>
     <string name="saved_data">Data has been saved</string>
-    <string name="wrong_input"> Write height and mass</string>
-    <string name="standards" tools:ignore="TypographyDashes"> below 18.0 – underweight \n18.0 – 25.0 - normal \n25.0 - 30.0 - overweight \nover 30.0 - obese</string>
+    <string name="no_input"> Write height and mass</string>
+    <string name="wrong_input"> Write correct height and mass</string>
+    <string name="standards" tools:ignore="TypographyDashes"> below 18.0 – underweight \n18.0 – 25.0 - normal weight\n25.0 - 30.0 - overweight \nover 30.0 - obese</string>
     <string name="under_message">You are underweight!</string>
     <string name="good_message">You have normal BMI</string>
     <string name="over_message">You are overweight!!!</string>

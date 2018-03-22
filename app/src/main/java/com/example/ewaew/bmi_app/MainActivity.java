@@ -1,6 +1,7 @@
 package com.example.ewaew.bmi_app;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -31,23 +32,26 @@ public class MainActivity extends AppCompatActivity {
     private final static String HINT_H ="hinth";
 
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-        massInput = findViewById(R.id.mass_input);
-        heightInput = findViewById(R.id.height_input);
-        switch_button = findViewById(R.id.switch_input);
-        showResult = findViewById(R.id.count_button);
+        initialize();
 
+        buttonSetOnClick();
 
+        loadDataAndUpdate();
+    }
 
+    private void buttonSetOnClick() {
         switch_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkData();
+                checkSwitch();
             }
         });
         showResult.setOnClickListener(new View.OnClickListener()
@@ -58,13 +62,21 @@ public class MainActivity extends AppCompatActivity {
                 onClickShowResult();
             }
         });
+    }
 
+    private void initialize() {
 
-        loadDataAndUpdate();
+        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES,MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        massInput = findViewById(R.id.mass_input);
+        heightInput = findViewById(R.id.height_input);
+        switch_button = findViewById(R.id.switch_input);
+        showResult = findViewById(R.id.count_button);
+
     }
 
 
-    private void checkData()
+    private void checkSwitch()
     {
         if(switch_button.isChecked())
         {
@@ -100,53 +112,60 @@ public class MainActivity extends AppCompatActivity {
     }
     private void onClickShowResult() {
 
-        boolean switchState = switch_button.isChecked();
-        double result;
-        if (massInput.getText().toString().equals("") || heightInput.getText().toString().equals("") )
+
+        if (isEmptyInput())
         {
-            Toast.makeText(getApplicationContext(),getString(R.string.wrong_input),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),getString(R.string.no_input),Toast.LENGTH_LONG).show();
         }
         else
         {
-            double mass = Double.parseDouble(massInput.getText().toString());
-            double height = Double.parseDouble(heightInput.getText().toString());
-
-            if (switchState==true)
+            try
             {
-                BMIKGM bmi_kg_m = new BMIKGM(mass,height);
-
-                try
-                {
-                    result = bmi_kg_m.calculate();
-                    final Intent intent = new Intent(this,Main3Activity.class);
-                    intent.putExtra(Main3Activity.RESULT,result);
-                    startActivity(intent);
-                }
-                catch(IllegalArgumentException e)
-                {
-                    checkException(e);
-                }
+                double mass = Double.parseDouble(massInput.getText().toString());
+                double height = Double.parseDouble(heightInput.getText().toString());
+                calculateBMI(mass,height);
             }
-            else
+            catch (RuntimeException e)
             {
-                BMIILBIN bmi_ilb_in = new BMIILBIN(mass,height);
-
-                try
-                {
-                    result = bmi_ilb_in.calculate();
-                    final Intent intent = new Intent(MainActivity.this,Main3Activity.class);
-                    intent.putExtra(Main3Activity.RESULT,result);
-                    startActivity(intent);
-                }
-
-                catch(IllegalArgumentException e)
-                {
-                    checkException(e);
-                }
-
+                Toast.makeText(getApplicationContext(),getString(R.string.wrong_input),Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+    private void calculateBMI(double mass, double height) {
+        boolean switchState = switch_button.isChecked();
+        double result;
+        if (switchState)
+        {
+            BMIKGM bmi_kg_m = new BMIKGM(mass,height);
+            try
+            {
+                result = bmi_kg_m.calculate();
+                Main3Activity.start(this,result);
+            }
+            catch(IllegalArgumentException e)
+            {
+                checkException(e);
+            }
+        }
+        else
+        {
+            BMILBSIN bmi_lbs_in = new BMILBSIN(mass,height);
+
+            try
+            {
+                result = bmi_lbs_in.calculate();
+                Main3Activity.start(this,result);
+            }
+            catch(IllegalArgumentException e)
+            {
+                checkException(e);
+            }
+        }
+
+    }
+
+
 
     private void checkException(IllegalArgumentException e)
     {
@@ -174,10 +193,10 @@ public class MainActivity extends AppCompatActivity {
                 final Intent intent = new Intent(this,FullscreenActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.save_butt:
+            case R.id.save_button:
                 saveData();
                 return true;
-            case R.id.erase_butt:
+            case R.id.erase_button:
                 eraseData();
                 return true;
         }
@@ -187,8 +206,6 @@ public class MainActivity extends AppCompatActivity {
     private void eraseData() {
         massInput.setText("");
         heightInput.setText("");
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
         Toast.makeText(getApplicationContext(),getString(R.string.erased_data),Toast.LENGTH_SHORT).show();
@@ -196,8 +213,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveData()
     {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCES,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(MASS_SAVE,massInput.getText().toString());
         editor.putString(HEIGHT_SAVE,heightInput.getText().toString());
         editor.putBoolean(SWITCH,switch_button.isChecked());
@@ -209,12 +224,15 @@ public class MainActivity extends AppCompatActivity {
     }
     private void loadDataAndUpdate()
     {
-        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES,MODE_PRIVATE);
         massInput.setText(sharedPreferences.getString(MASS_SAVE,""));
         heightInput.setText(sharedPreferences.getString(HEIGHT_SAVE,""));
         boolean on_off = sharedPreferences.getBoolean(SWITCH,false);
         massInput.setHint(sharedPreferences.getString(HINT_M,getString(R.string.pounds)));
         heightInput.setHint(sharedPreferences.getString(HINT_H,getString(R.string.inches)));
         switch_button.setChecked(on_off);
+    }
+
+    public boolean isEmptyInput() {
+        return massInput.getText().toString().equals("") || heightInput.getText().toString().equals("");
     }
 }

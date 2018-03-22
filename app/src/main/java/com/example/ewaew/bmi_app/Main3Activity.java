@@ -1,5 +1,6 @@
 package com.example.ewaew.bmi_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -14,16 +15,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static java.lang.String.format;
+
 public class Main3Activity extends AppCompatActivity {
+
+
 
     public static final String RESULT ="result";
     private TextView result;
-    private ConstraintLayout cl;
-
-    private final static double UNDER_WEIGHT = 18.0;
-    private final static double OVER_WEIGHT = 25.0;
-    private final static double OBESE = 30.0;
-
+    private ConstraintLayout constraintLayout;
 
 
     @Override
@@ -32,76 +32,35 @@ public class Main3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
 
         result = findViewById(R.id.result_output);
-        cl = findViewById(R.id.layout);
+        constraintLayout = findViewById(R.id.layout);
 
 
         Intent intent = this.getIntent();
-        double outPut = intent.getDoubleExtra(RESULT,0);
-        String bmi_result;
-        bmi_result=String.format("%.2f",outPut);
-        result.setText(bmi_result);
+        double resultD = intent.getDoubleExtra(RESULT, 0);
+        String resultS;
+        resultS = format("%.2f", resultD);
+        result.setText(resultS);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        if(outPut<UNDER_WEIGHT)
-        {
-            //cl.setBackgroundColor(Color.YELLOW);
-            int ot = getResources().getConfiguration().orientation;
-            if(ot== Configuration.ORIENTATION_LANDSCAPE)
-            {
-                cl.setBackgroundResource(R.drawable.zolty_poz);
-            }
-            else
-            {
-                cl.setBackgroundResource(R.drawable.zolty_pion);
-            }
+        setBackgroundAndToast(resultD);
 
-            Toast.makeText(getApplicationContext(),getString(R.string.under_message),Toast.LENGTH_LONG).show();
-        }
-        else if(outPut>OVER_WEIGHT && outPut<OBESE)
-        {
-            //cl.setBackgroundColor(Color.parseColor("#FF4500"));
-            int ot = getResources().getConfiguration().orientation;
-            if(ot== Configuration.ORIENTATION_LANDSCAPE)
-            {
-                cl.setBackgroundResource(R.drawable.pomaranczowy_poz);
-            }
-            else
-            {
-                cl.setBackgroundResource(R.drawable.pomaranczowy_pion);
-            }
-            Toast.makeText(getApplicationContext(),getString(R.string.over_message),Toast.LENGTH_LONG).show();
-        }
-        else if (outPut>OBESE)
-        {
-           // cl.setBackgroundColor(Color.RED);
-            int ot = getResources().getConfiguration().orientation;
-            if(ot== Configuration.ORIENTATION_LANDSCAPE)
-            {
-                cl.setBackgroundResource(R.drawable.czerwony_poz);
-            }
-            else
-            {
-                cl.setBackgroundResource(R.drawable.czerwony_pion);
-            }
-            Toast.makeText(getApplicationContext(),getString(R.string.obese_message),Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            //cl.setBackgroundColor(Color.GREEN);
-            int ot = getResources().getConfiguration().orientation;
-            if(ot== Configuration.ORIENTATION_LANDSCAPE)
-            {
-                cl.setBackgroundResource(R.drawable.zielony_poz);
-            }
-            else
-            {
-                cl.setBackgroundResource(R.drawable.zielony_pion);
+    }
 
-            }
-            Toast.makeText(getApplicationContext(),getString(R.string.good_message),Toast.LENGTH_LONG).show();
-        }
+    private void setBackgroundAndToast(double result) {
+        int orientation = getResources().getConfiguration().orientation;
+        BackgroundAndText backgroundAndText = BMI.setBackround(result, orientation);
+        int idBackground = backgroundAndText.getIdBackground();
+        int text = backgroundAndText.getIdText();
+        constraintLayout.setBackgroundResource(idBackground);
+        Toast.makeText(getApplicationContext(),getString(text),Toast.LENGTH_SHORT).show();
+    }
+
+    public static void start(Context context,double result) {
+        Intent starter = new Intent(context, Main3Activity.class);
+        starter.putExtra(RESULT,result);
+        context.startActivity(starter);
     }
     public boolean onCreateOptionsMenu(Menu menu)
     {

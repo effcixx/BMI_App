@@ -1,12 +1,14 @@
 package com.example.ewaew.bmi_app;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.widget.Toast;
 
 /**
- * Created by ewaew on 09.03.2018.
+ * Created by Ewa Lyko on 09.03.2018.
  */
 
-public class BMIILBIN extends BMI
+public class BMILBSIN extends BMI
 {
     private double mass;
     private double height;
@@ -19,7 +21,7 @@ public class BMIILBIN extends BMI
 
 
 
-    public BMIILBIN(double mass,double height)
+    public BMILBSIN(double mass,double height)
     {
         this.mass=mass;
         this.height=height;
@@ -27,10 +29,8 @@ public class BMIILBIN extends BMI
     public double calculate()
     {
         check();
-        double result = (mass / (height*height))*703;
-        return result;
+        return (mass / (height*height))*703;
     }
-
     @Override
     public void check() throws HeightAndMassException, HeightException, MassException {
         if((height <=MIN_HEIGHT || height>MAX_HEIGHT)&& (mass<=MIN_MASS || mass>=MAX_MASS))

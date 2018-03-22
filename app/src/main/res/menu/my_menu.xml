@@ -4,19 +4,19 @@
    app:popupTheme="@style/AboutAuthor">
 
     <item
-        android:id="@+id/erase_butt"
+        android:id="@+id/erase_button"
         android:icon="@android:drawable/ic_menu_delete"
         android:orderInCategory="1"
         android:title="@string/erase"
         android:visible="true"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/save_butt"
+        android:id="@+id/save_button"
         android:icon="@android:drawable/ic_menu_save"
         android:orderInCategory="2"
         android:title="@string/save"
         android:visible="true"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/author"
         android:title="@string/about_author"

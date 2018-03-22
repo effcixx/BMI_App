@@ -23,9 +23,10 @@
         </activity>
         <activity
             android:name=".Main3Activity"
-            android:parentActivityName=".MainActivity"
+
            />
-            <!-- tu mozna ustaawic parettn i sam sie pasek xzrobi -->
+            <!-- tu powyżej można ustawić android:parentActivityName=".MainActivity" wtedy przy nacisnieciu powrotu do mainacticity wyswietlaja sie zapisane dane
+            a jak tego nie ma to pomimo zapisanych wraca do ostatnio wpisanych danych. Przy zamknięciu aplikacji w obu prypadkach wraca do zapisanych danych-->
 
 
         <activity
