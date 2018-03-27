@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Main3Activity"
+            android:name=".BMIResultActivity"
 
            />
             <!-- tu powyżej można ustawić android:parentActivityName=".MainActivity" wtedy przy nacisnieciu powrotu do mainacticity wyswietlaja sie zapisane dane

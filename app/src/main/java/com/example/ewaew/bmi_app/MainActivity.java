@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             try
             {
                 result = bmi_kg_m.calculate();
-                Main3Activity.start(this,result);
+                BMIResultActivity.start(this,result);
             }
             catch(IllegalArgumentException e)
             {
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             try
             {
                 result = bmi_lbs_in.calculate();
-                Main3Activity.start(this,result);
+                BMIResultActivity.start(this,result);
             }
             catch(IllegalArgumentException e)
             {

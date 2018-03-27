@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import static java.lang.String.format;
 
-public class Main3Activity extends AppCompatActivity {
+public class BMIResultActivity extends AppCompatActivity {
 
 
 
@@ -62,7 +62,7 @@ public class Main3Activity extends AppCompatActivity {
     }
 
     public static void start(Context context,double result) {
-        Intent starter = new Intent(context, Main3Activity.class);
+        Intent starter = new Intent(context, BMIResultActivity.class);
         starter.putExtra(RESULT,result);
         context.startActivity(starter);
     }
