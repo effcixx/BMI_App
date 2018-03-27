@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
@@ -31,21 +32,24 @@ public class Main3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
-        result = findViewById(R.id.result_output);
-        constraintLayout = findViewById(R.id.layout);
+        initialize();
+        setResult();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
 
+    private void setResult() {
         Intent intent = this.getIntent();
         double resultD = intent.getDoubleExtra(RESULT, 0);
         String resultS;
         resultS = format("%.2f", resultD);
         result.setText(resultS);
-
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         setBackgroundAndToast(resultD);
+    }
 
+    private void initialize() {
+        result = findViewById(R.id.result_output);
+        constraintLayout = findViewById(R.id.layout);
     }
 
     private void setBackgroundAndToast(double result) {

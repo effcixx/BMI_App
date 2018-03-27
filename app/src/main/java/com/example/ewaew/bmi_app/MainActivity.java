@@ -1,7 +1,6 @@
 package com.example.ewaew.bmi_app;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         switch_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkSwitch();
+                checkSwitchAndSetHint();
             }
         });
         showResult.setOnClickListener(new View.OnClickListener()
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void checkSwitch()
+    private void checkSwitchAndSetHint()
     {
         if(switch_button.isChecked())
         {

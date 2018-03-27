@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.ewaew.bmi_app.Main3Activity"
-    android:theme="@style/AppTheme">
+    android:theme="@style/AppTheme"
+    >
 
     <TextView
         android:id="@+id/result_output"
